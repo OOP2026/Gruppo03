@@ -3,7 +3,6 @@ package model.homework1;
 public class Amministratore extends Utente {
     private String username;
 
-    // Metodi indicati nel tuo diagramma
     public boolean registraPaziente(Paziente p) {
         return true;
     }
