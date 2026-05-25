@@ -1,4 +1,4 @@
-package model.homework1;
+package model;
 
 public enum giornoSettimana {
     LUNEDI,
