@@ -10,15 +10,17 @@ public class DashboardFrame extends JFrame {
 
     public DashboardFrame(Controller controller) {
         this.controller = controller;
-        setTitle("dashboard principale");
+        setTitle("Dashboard Principale");
         setSize(450, 300);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
-        JPanel pannello = new JPanel(new GridLayout(3, 1, 10, 10));
-        bottoneDegenti = new JButton("gestione degenti");
-        bottoneDegenze = new JButton("gestione degenze");
-        bottoneEsci = new JButton("logout");
+        JPanel pannello = new JPanel(new GridLayout(3, 1, 15, 15));
+        pannello.setBorder(BorderFactory.createEmptyBorder(40, 70, 40, 70));
+
+        bottoneDegenti = new JButton("Gestione Degenti");
+        bottoneDegenze = new JButton("Gestione Degenze");
+        bottoneEsci = new JButton("Logout");
 
         pannello.add(bottoneDegenti);
         pannello.add(bottoneDegenze);
@@ -31,6 +33,7 @@ public class DashboardFrame extends JFrame {
             new AccessoFrame(controller);
             dispose();
         });
+
         setVisible(true);
     }
 }
