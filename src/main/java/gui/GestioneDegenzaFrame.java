@@ -11,18 +11,20 @@ public class GestioneDegenzaFrame extends JFrame {
 
     public GestioneDegenzaFrame(Controller controller) {
         this.controller = controller;
-        setTitle("gestione degenze");
+        setTitle("Gestione Degenze");
         setSize(500, 300);
         setLocationRelativeTo(null);
 
-        JPanel pannello = new JPanel(new GridLayout(4, 2, 10, 10));
-        JLabel labelDocumento = new JLabel("documento degente");
-        JLabel labelSettore = new JLabel("settore");
-        JLabel labelPosto = new JLabel("posto letto");
+        JPanel pannello = new JPanel(new GridLayout(4, 2, 10, 15));
+        pannello.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+
+        JLabel labelDocumento = new JLabel("Documento degente:");
+        JLabel labelSettore = new JLabel("Settore:");
+        JLabel labelPosto = new JLabel("Posto letto:");
         campoDocumento = new JTextField();
         campoSettore = new JTextField();
         campoPosto = new JTextField();
-        bottoneAssegna = new JButton("assegna degenza");
+        bottoneAssegna = new JButton("Assegna degenza");
 
         pannello.add(labelDocumento);
         pannello.add(campoDocumento);
@@ -39,12 +41,13 @@ public class GestioneDegenzaFrame extends JFrame {
             String settore = campoSettore.getText();
             String posto = campoPosto.getText();
             controller.registraDegenza(documento, settore, posto);
-            JOptionPane.showMessageDialog(null, "degenza salvata");
-            // opzionale: pulisci campi
+            JOptionPane.showMessageDialog(null, "Degenza salvata con successo");
+
             campoDocumento.setText("");
             campoSettore.setText("");
             campoPosto.setText("");
         });
+
         setVisible(true);
     }
 }
