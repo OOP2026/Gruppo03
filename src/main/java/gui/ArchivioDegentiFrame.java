@@ -13,19 +13,21 @@ public class ArchivioDegentiFrame extends JFrame {
 
     public ArchivioDegentiFrame(Controller controller) {
         this.controller = controller;
-        setTitle("archivio degenti");
+        setTitle("Archivio Degenti");
         setSize(800, 500);
         setLocationRelativeTo(null);
 
-        JPanel contenitore = new JPanel(new BorderLayout());
+        JPanel contenitore = new JPanel(new BorderLayout(10, 10));
+        contenitore.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+
         JPanel parteAlta = new JPanel(new GridLayout(4, 2, 10, 10));
-        JLabel labelNome = new JLabel("nome");
-        JLabel labelCognome = new JLabel("cognome");
-        JLabel labelDocumento = new JLabel("documento");
+        JLabel labelNome = new JLabel("Nome:");
+        JLabel labelCognome = new JLabel("Cognome:");
+        JLabel labelDocumento = new JLabel("Documento:");
         campoNome = new JTextField();
         campoCognome = new JTextField();
         campoDocumento = new JTextField();
-        bottoneInserisci = new JButton("inserisci degente");
+        bottoneInserisci = new JButton("Inserisci degente");
 
         parteAlta.add(labelNome);
         parteAlta.add(campoNome);
@@ -37,7 +39,7 @@ public class ArchivioDegentiFrame extends JFrame {
         parteAlta.add(bottoneInserisci);
         contenitore.add(parteAlta, BorderLayout.NORTH);
 
-        String[] colonne = {"nome", "cognome", "documento"};
+        String[] colonne = {"Nome", "Cognome", "Documento"};
         DefaultTableModel modello = new DefaultTableModel(colonne, 0);
         tabella = new JTable(modello);
         JScrollPane scroll = new JScrollPane(tabella);
@@ -49,7 +51,7 @@ public class ArchivioDegentiFrame extends JFrame {
             String cognome = campoCognome.getText();
             String documento = campoDocumento.getText();
             if (nome.isEmpty() || cognome.isEmpty() || documento.isEmpty()) {
-                JOptionPane.showMessageDialog(null, "compila tutti i campi");
+                JOptionPane.showMessageDialog(null, "Compila tutti i campi");
                 return;
             }
             controller.registraDegente(nome, cognome, documento);
@@ -57,10 +59,10 @@ public class ArchivioDegentiFrame extends JFrame {
             campoNome.setText("");
             campoCognome.setText("");
             campoDocumento.setText("");
-            JOptionPane.showMessageDialog(null, "degente registrato");
+            JOptionPane.showMessageDialog(null, "Degente registrato");
         });
 
-        aggiornaTabella();  // carica i dati esistenti
+        aggiornaTabella();
         setVisible(true);
     }
 
