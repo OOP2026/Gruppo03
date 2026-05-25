@@ -12,17 +12,19 @@ public class AccessoFrame extends JFrame {
 
     public AccessoFrame(Controller controller) {
         this.controller = controller;
-        setTitle("Login gestione pazienti");
+        setTitle("Login - Sistema Gestione Pazienti");
         setSize(450, 250);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
         JPanel pannello = new JPanel(new GridLayout(3, 2, 10, 10));
-        JLabel labelUtente = new JLabel("utente");
-        JLabel labelPassword = new JLabel("password");
+        pannello.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+
+        JLabel labelUtente = new JLabel("Utente:");
+        JLabel labelPassword = new JLabel("Password:");
         campoUtente = new JTextField();
         campoPassword = new JPasswordField();
-        pulsanteAccesso = new JButton("entra");
+        pulsanteAccesso = new JButton("Accedi");
 
         pannello.add(labelUtente);
         pannello.add(campoUtente);
@@ -36,11 +38,11 @@ public class AccessoFrame extends JFrame {
             String utente = campoUtente.getText();
             String password = new String(campoPassword.getPassword());
             if (controller.controllaAccesso(utente, password)) {
-                JOptionPane.showMessageDialog(null, "accesso effettuato");
+                JOptionPane.showMessageDialog(null, "Accesso effettuato con successo!");
                 new DashboardFrame(controller);
                 dispose();
             } else {
-                JOptionPane.showMessageDialog(null, "dati errati");
+                JOptionPane.showMessageDialog(null, "Credenziali errate. Riprova.");
             }
         });
         setVisible(true);
