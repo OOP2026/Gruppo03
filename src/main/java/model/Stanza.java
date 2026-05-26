@@ -3,12 +3,13 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 
+// rappresenta una stanza all'interno di un reparto dell'ospedale
 public class Stanza {
     private String nome;
     private List<Letto> letti = new ArrayList<>();
-    private Reparto reparto;  // molti a uno: una stanza appartiene a un reparto
+    private Reparto reparto;
 
-    // getter e setter
+    // metodi getter e setter per gestire le info della stanza
     public String getNome() {
         return nome;
     }
