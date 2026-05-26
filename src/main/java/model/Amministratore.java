@@ -7,27 +7,25 @@ public class Amministratore extends Utente {
         super(login, password);
         this.username = username;
     }
-
+    // metodo per la registrazione di un nuovo paziente nel sistema
     public boolean registraPaziente(Paziente p) {
-        // logica da implementare
+        // logica di salvataggio nel database da implementare
         return true;
     }
-
+    // associa un nuovo ricovero a un posto letto
     public boolean registraRicovero(Ricovero r, Letto l) {
-        // logica da implementare
+        // logica di assegnazione da implementare
         return false;
     }
-
+    // ricerca il primo posto letto libero all'interno di un reparto
     public String cercaLettoDisponibile(Reparto rep) {
-        // logica da implementare
+        // logica di ricerca nel database da implementare
         return "";
     }
-
-    // getter e setter
+    // metodi getter e setter per l'username
     public String getUsername() {
         return username;
     }
-
     public void setUsername(String username) {
         this.username = username;
     }
