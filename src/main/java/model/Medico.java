@@ -10,13 +10,14 @@ public class Medico extends Utente {
     private List<Turno> turni = new ArrayList<>();
     private List<Prestazione> prestazioni = new ArrayList<>();
 
+    // costruttore del medico con i dati di accesso e le info base
     public Medico(String login, String password, String matricola, String specializzazione) {
         super(login, password);
         this.matricola = matricola;
         this.specializzazione = specializzazione;
     }
 
-    // getter e setter
+    // metodi getter e setter per gestire i dati del medico
     public String getMatricola() {
         return matricola;
     }
