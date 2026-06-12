@@ -37,7 +37,7 @@ public class AccessoFrame extends JFrame {
         //salvo il controller per usarlo nell'evento del bottone
         this.controller = controller;
 
-        setTitle("Login - sistema gestione pazienti");
+        setTitle("Login del sistema");
 
         setSize(450, 250);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -62,7 +62,7 @@ public class AccessoFrame extends JFrame {
 
         pulsanteAccesso = new JButton("Accedi");
 
-        e
+
         pannello.add(labelUtente);
         pannello.add(campoUtente);
         pannello.add(labelPassword);
@@ -82,15 +82,15 @@ public class AccessoFrame extends JFrame {
             //verifica se le credenziali sono corrette
             if (controller.controllaAccesso(utente, password)) {
 
-                //credenziali correttd
-                JOptionPane.showMessageDialog(null, "Accesso effettuato con successo!");
+                //credenziali corrette
+                JOptionPane.showMessageDialog(null, "accesso effettuato");
                 //apri dashboard
                 new DashboardFrame(controller);
                //chiudi finiestra login
                 dispose();
             } else {
                 //rimani sulla stessa finestra
-                JOptionPane.showMessageDialog(null, "Credenziali errate. Riprova.");}
+                JOptionPane.showMessageDialog(null, "credenziali errate");}
         });
 
         setVisible(true);

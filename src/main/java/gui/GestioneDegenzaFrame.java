@@ -1,84 +1,159 @@
 package gui;
 
 import controller.Controller;
-import javax.swing.*;
-import java.awt.*;
+
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import java.awt.GridLayout;
 
 /**
- * funzionalità:
- * finestra per assegnare una nuova degenza (ricovero) a un degente già registrato.
- * richiede il codice fiscale del paziente, il settore/reparto e opzionalmente il posto letto.
- * poi chiama il controller per salvare il ricovero.
+ * Schermata per registrare un ricovero/degenza.
+ *
+ * Usa tre JComboBox:
+ * - paziente già presente nell'archivio;
+ * - reparto;
+ * - letto libero nel reparto selezionato.
  */
 public class GestioneDegenzaFrame extends JFrame {
 
-    private Controller controller;
+    private final Controller controller;
+    private final DashboardFrame dashboardFrame;
 
-    private JTextField campoDocumento, campoSettore, campoPosto;
+    private JComboBox<String> comboPazienti;
+    private JComboBox<String> comboReparti;
+    private JComboBox<String> comboLetti;
 
-    private JButton bottoneAssegna;
+    private JButton bottoneRegistra;
 
-    /**
-     * funzionalità:
-     * costruttore: costruisce la finestra con tutti i campi e gestisce l'evento.
-     */
-    public GestioneDegenzaFrame(Controller controller) {
-
-        //salvo il controller per usarlo nell'evento del bottone
+    public GestioneDegenzaFrame(Controller controller, DashboardFrame dashboardFrame) {
         this.controller = controller;
+        this.dashboardFrame = dashboardFrame;
 
-        //titolo della finestra
         setTitle("Gestione Degenze");
-
-        setSize(500, 300);
+        setSize(650, 300);
         setLocationRelativeTo(null);
 
-        // pannello con layout a griglia: 4 righe, 2 colonne, spazi orizzontali 10, verticali 15
         JPanel pannello = new JPanel(new GridLayout(4, 2, 10, 15));
         pannello.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
-        JLabel labelDocumento = new JLabel("Documento degente:");
-        JLabel labelSettore = new JLabel("Settore:");
-        JLabel labelPosto = new JLabel("Posto letto:");
+        comboPazienti = new JComboBox<>();
+        comboReparti = new JComboBox<>();
+        comboLetti = new JComboBox<>();
 
+        bottoneRegistra = new JButton("Registra ricovero");
 
-        campoDocumento = new JTextField();
-        campoSettore = new JTextField();
-        campoPosto = new JTextField();
+        pannello.add(new JLabel("Paziente:"));
+        pannello.add(comboPazienti);
 
-        bottoneAssegna = new JButton("Assegna degenza");
+        pannello.add(new JLabel("Reparto:"));
+        pannello.add(comboReparti);
 
-        pannello.add(labelDocumento);
-        pannello.add(campoDocumento);
-        pannello.add(labelSettore);
-        pannello.add(campoSettore);
-        pannello.add(labelPosto);
-        pannello.add(campoPosto);
+        pannello.add(new JLabel("Letto libero:"));
+        pannello.add(comboLetti);
+
         pannello.add(new JLabel());
-        pannello.add(bottoneAssegna);
+        pannello.add(bottoneRegistra);
 
         add(pannello);
 
-        //definisco l'azione del bottone "assegna degenza"
-        bottoneAssegna.addActionListener(e -> {
-            // leggo i valori dai campi di testo
-            String documento = campoDocumento.getText();
-            String settore = campoSettore.getText();
-            String posto = campoPosto.getText();
+        caricaPazienti();
+        caricaReparti();
+        aggiornaLettiLiberi();
 
-            // chiamo il controller che tenterà di registrare la degenza
-            controller.registraDegenza(documento, settore, posto);
+        comboReparti.addActionListener(e -> aggiornaLettiLiberi());
 
-            // messaggio di conferma (indipendentemente dal successo o meno della ricerca del letto...)
-            JOptionPane.showMessageDialog(null, "Degenza salvata con successo");
+        bottoneRegistra.addActionListener(e -> registraRicovero());
 
-            // pulisco i campi per un nuovo inserimento
-            campoDocumento.setText("");
-            campoSettore.setText("");
-            campoPosto.setText("");
-        });
-
-        //rendo visibile la finestra
         setVisible(true);
+    }
+
+    private void caricaPazienti() {
+        comboPazienti.removeAllItems();
+
+        String[] pazienti = controller.recuperaPazientiPerCombo();
+
+        for (int i = 0; i < pazienti.length; i++) {
+            comboPazienti.addItem(pazienti[i]);
+        }
+    }
+
+    private void caricaReparti() {
+        comboReparti.removeAllItems();
+
+        String[] reparti = controller.recuperaRepartiPerCombo();
+
+        for (int i = 0; i < reparti.length; i++) {
+            comboReparti.addItem(reparti[i]);
+        }
+    }
+
+    private void aggiornaLettiLiberi() {
+        comboLetti.removeAllItems();
+
+        String repartoSelezionato = (String) comboReparti.getSelectedItem();
+
+        if (repartoSelezionato == null) {
+            return;
+        }
+
+        String[] lettiLiberi = controller.recuperaLettiLiberiPerReparto(repartoSelezionato);
+
+        for (int i = 0; i < lettiLiberi.length; i++) {
+            comboLetti.addItem(lettiLiberi[i]);
+        }
+    }
+
+    private void registraRicovero() {
+        String pazienteSelezionato = (String) comboPazienti.getSelectedItem();
+        String repartoSelezionato = (String) comboReparti.getSelectedItem();
+        String lettoSelezionato = (String) comboLetti.getSelectedItem();
+
+        if (pazienteSelezionato == null) {
+            JOptionPane.showMessageDialog(this, "Nessun paziente disponibile.");
+            return;
+        }
+
+        if (repartoSelezionato == null) {
+            JOptionPane.showMessageDialog(this, "Nessun reparto disponibile.");
+            return;
+        }
+
+        if (lettoSelezionato == null) {
+            JOptionPane.showMessageDialog(this, "Nessun letto libero disponibile per questo reparto.");
+            return;
+        }
+
+        String codiceFiscale = estraiCodiceFiscale(pazienteSelezionato);
+
+        String messaggio = controller.registraDegenza(
+                codiceFiscale,
+                repartoSelezionato,
+                lettoSelezionato
+        );
+
+        JOptionPane.showMessageDialog(this, messaggio);
+
+        if (messaggio.startsWith("OK")) {
+            aggiornaLettiLiberi();
+
+            if (dashboardFrame != null) {
+                dashboardFrame.aggiornaDashboard();
+            }
+        }
+    }
+
+    private String estraiCodiceFiscale(String testoCombo) {
+        String[] parti = testoCombo.split(" - ");
+
+        if (parti.length > 0) {
+            return parti[0];
+        }
+
+        return testoCombo;
     }
 }
