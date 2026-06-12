@@ -4,7 +4,6 @@ import dao.*;
 import implementazioneDao.*;
 import model.*;
 
-
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -12,14 +11,10 @@ import java.time.format.DateTimeParseException;
 import java.util.List;
 
 /**
- * Controller principale dell'applicazione.
- *
- * La GUI parla con il Controller.
- * Il Controller parla con i DAO.
- * I DAO parlano con PostgreSQL.
+ * controller principale dell'app.
+ * fa da ponte tra l'interfaccia grafica e il database (i dao).
+ * gestisce tutta la logica di base come i salvataggi e i controlli.
  */
-
-
 public class Controller {
 
 	private final UtenteDAO utenteDAO;
@@ -29,6 +24,10 @@ public class Controller {
 	private final RepartoDAO repartoDAO;
 	private final StanzaDAO stanzaDAO;
 
+	/**
+	 * crea il controller e prepara tutti i dao.
+	 * alla fine chiama il metodo per creare i dati finti se il db è vuoto.
+	 */
 	public Controller() {
 		utenteDAO = new UtentePostgresDao();
 		pazienteDAO = new PazientePostgresDao();
@@ -44,6 +43,13 @@ public class Controller {
 	// LOGIN
 	// =========================================================
 
+	/**
+	 * controlla se username e password sono giusti per fare il login.
+	 *
+	 * @param login l'username inserito
+	 * @param password la password inserita
+	 * @return true se i dati sono corretti, sennò false
+	 */
 	public boolean controllaAccesso(String login, String password) {
 		try {
 			return utenteDAO.checkCredentials(login, password);
@@ -57,6 +63,15 @@ public class Controller {
 	// ARCHIVIO DEGENTI
 	// =========================================================
 
+	/**
+	 * controlla che i dati siano tutti compilati e poi salva il nuovo paziente.
+	 *
+	 * @param nome nome del paziente
+	 * @param cognome cognome del paziente
+	 * @param codiceFiscale codice fiscale
+	 * @param dataNascitaTesto data di nascita scritta come testo (es. 2001-05-23)
+	 * @return messaggio di ok o l'errore da mostrare a schermo
+	 */
 	public String registraDegente(String nome, String cognome, String codiceFiscale, String dataNascitaTesto) {
 		try {
 			if (nome == null || nome.trim().isEmpty()) {
@@ -107,6 +122,11 @@ public class Controller {
 		}
 	}
 
+	/**
+	 * prende tutti i pazienti e li mette in una matrice per farli vedere nella tabella.
+	 *
+	 * @return matrice con i dati dei pazienti
+	 */
 	public Object[][] recuperaTabellaDegenti() {
 		try {
 			List<Paziente> pazienti = pazienteDAO.findAll();
@@ -130,6 +150,11 @@ public class Controller {
 		}
 	}
 
+	/**
+	 * prende i pazienti per metterli nei menu a tendina.
+	 *
+	 * @return array di stringhe con cf, cognome e nome
+	 */
 	public String[] recuperaPazientiPerCombo() {
 		try {
 			List<Paziente> pazienti = pazienteDAO.findAll();
@@ -158,6 +183,11 @@ public class Controller {
 	// REPARTI E LETTI
 	// =========================================================
 
+	/**
+	 * prende i nomi dei reparti per i menu a tendina.
+	 *
+	 * @return array con i nomi dei reparti
+	 */
 	public String[] recuperaRepartiPerCombo() {
 		try {
 			List<Reparto> reparti = repartoDAO.findAll();
@@ -176,6 +206,12 @@ public class Controller {
 		}
 	}
 
+	/**
+	 * cerca i letti vuoti in un reparto specifico.
+	 *
+	 * @param nomeReparto il reparto da controllare
+	 * @return array con i codici dei letti liberi
+	 */
 	public String[] recuperaLettiLiberiPerReparto(String nomeReparto) {
 		try {
 			if (nomeReparto == null || nomeReparto.trim().isEmpty()) {
@@ -202,6 +238,14 @@ public class Controller {
 	// GESTIONE DEGENZA / RICOVERO
 	// =========================================================
 
+	/**
+	 * fa i controlli e poi salva un nuovo ricovero associando il paziente al letto.
+	 *
+	 * @param codiceFiscale cf del paziente
+	 * @param nomeReparto reparto scelto
+	 * @param codiceLetto letto scelto
+	 * @return messaggio di successo o di errore
+	 */
 	public String registraDegenza(String codiceFiscale, String nomeReparto, String codiceLetto) {
 		try {
 			if (codiceFiscale == null || codiceFiscale.trim().isEmpty()) {
@@ -260,6 +304,12 @@ public class Controller {
 		}
 	}
 
+	/**
+	 * controlla se un letto è già preso da qualche ricovero attivo.
+	 *
+	 * @param letto il letto da verificare
+	 * @return true se è occupato, false se è libero
+	 */
 	private boolean isLettoOccupato(Letto letto) {
 		try {
 			List<Ricovero> ricoveriAttivi = ricoveroDAO.findRicoveriAttivi();
@@ -284,6 +334,11 @@ public class Controller {
 	// DASHBOARD
 	// =========================================================
 
+	/**
+	 * conta quanti letti ci sono in totale in ospedale.
+	 *
+	 * @return numero totale dei letti
+	 */
 	public int contaLettiTotali() {
 		try {
 			return lettoDAO.findAll().size();
@@ -293,6 +348,11 @@ public class Controller {
 		}
 	}
 
+	/**
+	 * conta quanti letti sono usati al momento.
+	 *
+	 * @return numero di letti occupati
+	 */
 	public int contaLettiOccupati() {
 		try {
 			return ricoveroDAO.findRicoveriAttivi().size();
@@ -302,6 +362,11 @@ public class Controller {
 		}
 	}
 
+	/**
+	 * fa la sottrazione per capire quanti posti ci sono ancora.
+	 *
+	 * @return numero di letti liberi
+	 */
 	public int contaLettiLiberi() {
 		int liberi = contaLettiTotali() - contaLettiOccupati();
 
@@ -316,6 +381,9 @@ public class Controller {
 	// DATI INIZIALI STRUTTURALI
 	// =========================================================
 
+	/**
+	 * crea utenti e reparti base se il database è appena stato creato.
+	 */
 	private void creaDatiIniziali() {
 		try {
 			creaUtentiIniziali();
@@ -325,6 +393,11 @@ public class Controller {
 		}
 	}
 
+	/**
+	 * crea un paio di admin di default se non ci sono.
+	 *
+	 * @throws SQLException se salta il database
+	 */
 	private void creaUtentiIniziali() throws SQLException {
 		if (utenteDAO.findByLogin("daniele") == null) {
 			utenteDAO.save(new Amministratore("daniele", "daniele", "Daniele"));
@@ -335,6 +408,11 @@ public class Controller {
 		}
 	}
 
+	/**
+	 * crea la struttura base dell'ospedale con reparti, stanze e letti.
+	 *
+	 * @throws SQLException se c'è un problema di salvataggio
+	 */
 	private void creaRepartiStanzeLettiIniziali() throws SQLException {
 		Reparto cardiologia = creaReparto("Cardiologia");
 		Reparto ortopedia = creaReparto("Ortopedia");
@@ -355,6 +433,13 @@ public class Controller {
 		creaLetto("L202B", stanza202);
 	}
 
+	/**
+	 * crea un reparto nuovo o lo recupera se c'è già.
+	 *
+	 * @param nome nome del reparto
+	 * @return il reparto
+	 * @throws SQLException errore db
+	 */
 	private Reparto creaReparto(String nome) throws SQLException {
 		Reparto reparto = repartoDAO.findByNome(nome);
 
@@ -370,6 +455,14 @@ public class Controller {
 		return reparto;
 	}
 
+	/**
+	 * crea una stanza e la collega al suo reparto.
+	 *
+	 * @param nome numero o nome della stanza
+	 * @param reparto reparto in cui sta la stanza
+	 * @return la stanza creata
+	 * @throws SQLException errore db
+	 */
 	private Stanza creaStanza(String nome, Reparto reparto) throws SQLException {
 		Stanza stanza = new Stanza();
 		stanza.setNome(nome);
@@ -380,6 +473,13 @@ public class Controller {
 		return stanza;
 	}
 
+	/**
+	 * crea un letto e lo piazza in una stanza se non esiste già.
+	 *
+	 * @param codice codice del letto
+	 * @param stanza stanza di appartenenza
+	 * @throws SQLException errore db
+	 */
 	private void creaLetto(String codice, Stanza stanza) throws SQLException {
 		if (lettoDAO.findByCodice(codice) != null) {
 			return;

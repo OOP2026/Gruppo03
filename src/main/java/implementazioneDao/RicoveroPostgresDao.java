@@ -17,17 +17,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * DAO PostgreSQL per la tabella ricovero.
- *
- * Tabella:
- * ricovero(
- * id,
- * paziente_cf,
- * letto_codice,
- * data_ora_inizio,
- * data_ora_dimissioni_previste,
- * data_ora_dimissione_effettuate
- * )
+ * implementazione specifica per postgresql dell'interfaccia ricoverodao.
+ * contiene le query sql per salvare, aggiornare e leggere i ricoveri dei pazienti dal database.
  */
 public class RicoveroPostgresDao implements RicoveroDAO {
 
@@ -147,6 +138,14 @@ public class RicoveroPostgresDao implements RicoveroDAO {
         }
     }
 
+    /**
+     * metodo di appoggio interno per non ripetere codice. riceve una query sql già pronta,
+     * la esegue e restituisce direttamente la lista dei ricoveri trovati.
+     *
+     * @param sql la query da far eseguire a postgres
+     * @return la lista dei ricoveri
+     * @throws SQLException se c'è un errore nell'esecuzione della query
+     */
     private List<Ricovero> eseguiQueryRicoveri(String sql) throws SQLException {
         List<Ricovero> ricoveri = new ArrayList<>();
 
@@ -162,6 +161,14 @@ public class RicoveroPostgresDao implements RicoveroDAO {
         return ricoveri;
     }
 
+    /**
+     * metodo di appoggio interno. prende una riga grezza in uscita dal database
+     * e la trasforma in un vero e proprio oggetto ricovero.
+     *
+     * @param rs il risultato grezzo della query sql
+     * @return l'oggetto ricovero pronto all'uso
+     * @throws SQLException se manca qualche colonna o c'è un errore di lettura
+     */
     private Ricovero creaRicoveroDaResultSet(ResultSet rs) throws SQLException {
         Paziente paziente = new Paziente();
         paziente.setCodiceFiscale(rs.getString("paziente_cf"));

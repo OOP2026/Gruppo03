@@ -13,10 +13,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * DAO PostgreSQL per la tabella stanza.
- *
- * Tabella:
- * stanza(nome, reparto_nome)
+ * implementazione specifica per postgresql dell'interfaccia stanzadao.
+ * contiene le query sql per salvare e cercare le stanze associate ai vari reparti nel database.
  */
 public class StanzaPostgresDao implements StanzaDAO {
 
@@ -60,6 +58,14 @@ public class StanzaPostgresDao implements StanzaDAO {
         return stanze;
     }
 
+    /**
+     * metodo di appoggio interno. prende una riga grezza in uscita dal database (resultset)
+     * e la trasforma in un vero e proprio oggetto stanza, collegandolo al suo reparto.
+     *
+     * @param rs il risultato della query sql
+     * @return l'oggetto stanza pronto all'uso
+     * @throws SQLException se manca qualche colonna o c'è un errore di lettura
+     */
     private Stanza creaStanzaDaResultSet(ResultSet rs) throws SQLException {
         Reparto reparto = new Reparto();
         reparto.setNome(rs.getString("reparto_nome"));

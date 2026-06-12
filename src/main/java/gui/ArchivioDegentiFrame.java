@@ -16,7 +16,8 @@ import java.awt.BorderLayout;
 import java.awt.GridLayout;
 
 /**
- * Finestra per inserire e visualizzare i pazienti presenti nell'archivio.
+ * finestra per inserire e visualizzare i pazienti presenti nell'archivio.
+ * mostra un modulo di registrazione in alto e una tabella riassuntiva in basso.
  */
 public class ArchivioDegentiFrame extends JFrame {
 
@@ -30,6 +31,11 @@ public class ArchivioDegentiFrame extends JFrame {
     private JButton bottoneInserisci;
     private JTable tabella;
 
+    /**
+     * crea la finestra dell'archivio degenti e disegna tutta l'interfaccia.
+     *
+     * @param controller il controller centrale per comunicare con il database
+     */
     public ArchivioDegentiFrame(Controller controller) {
         this.controller = controller;
 
@@ -87,6 +93,10 @@ public class ArchivioDegentiFrame extends JFrame {
         setVisible(true);
     }
 
+    /**
+     * prende i dati scritti nei campi di testo e chiede al controller di salvare il nuovo paziente.
+     * se va a buon fine, ricarica la tabella e svuota i campi.
+     */
     private void inserisciDegente() {
         String nome = campoNome.getText();
         String cognome = campoCognome.getText();
@@ -108,6 +118,10 @@ public class ArchivioDegentiFrame extends JFrame {
         }
     }
 
+    /**
+     * cancella i dati vecchi dalla tabella grafica e chiede al controller l'elenco aggiornato dal database
+     * per stamparlo a schermo.
+     */
     private void aggiornaTabella() {
         DefaultTableModel modello = (DefaultTableModel) tabella.getModel();
         modello.setRowCount(0);
@@ -119,6 +133,9 @@ public class ArchivioDegentiFrame extends JFrame {
         }
     }
 
+    /**
+     * svuota tutti i campi di testo dopo che un inserimento è andato a buon fine.
+     */
     private void pulisciCampi() {
         campoNome.setText("");
         campoCognome.setText("");

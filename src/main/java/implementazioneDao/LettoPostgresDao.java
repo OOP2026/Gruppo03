@@ -14,10 +14,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * DAO PostgreSQL per la tabella letto.
- *
- * Tabella:
- * letto(codice, stanza_nome, reparto_nome)
+ * implementazione specifica per postgresql dell'interfaccia lettodao.
+ * contiene le query sql vere e proprie per salvare o leggere i letti dal database.
  */
 public class LettoPostgresDao implements LettoDAO {
 
@@ -137,6 +135,14 @@ public class LettoPostgresDao implements LettoDAO {
         }
     }
 
+    /**
+     * metodo di appoggio interno. prende una riga grezza in uscita dal database (resultset)
+     * e la trasforma in un vero e proprio oggetto letto utilizzabile da java.
+     *
+     * @param rs il risultato della query sql
+     * @return l'oggetto letto pronto all'uso
+     * @throws SQLException se manca qualche colonna o c'è un errore di lettura
+     */
     private Letto creaLettoDaResultSet(ResultSet rs) throws SQLException {
         Reparto reparto = new Reparto();
         reparto.setNome(rs.getString("reparto_nome"));

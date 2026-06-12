@@ -14,10 +14,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * DAO PostgreSQL per la tabella utente.
- *
- * Tabella:
- * utente(login, password, tipo, username)
+ * implementazione specifica per postgresql dell'interfaccia utentedao.
+ * contiene le query sql per salvare, cercare e verificare l'accesso degli utenti al database.
  */
 public class UtentePostgresDao implements UtenteDAO {
 
@@ -110,6 +108,14 @@ public class UtentePostgresDao implements UtenteDAO {
         }
     }
 
+    /**
+     * metodo di appoggio interno. prende una riga dal database e crea l'oggetto
+     * utente giusto (amministratore o utente semplice) in base al tipo salvato.
+     *
+     * @param rs il risultato della query sql
+     * @return l'oggetto utente specifico creato
+     * @throws SQLException se manca qualche colonna o c'è un errore di lettura
+     */
     private Utente creaUtenteDaResultSet(ResultSet rs) throws SQLException {
         String login = rs.getString("login");
         String password = rs.getString("password");

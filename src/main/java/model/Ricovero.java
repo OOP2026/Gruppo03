@@ -4,6 +4,11 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * rappresenta un ricovero ospedaliero.
+ * gestisce il periodo di degenza di un paziente, tracciando le date chiave
+ * e le prestazioni mediche effettuate durante la sua permanenza in un letto specifico.
+ */
 public class Ricovero {
     private LocalDateTime dataOraInizio;
     private LocalDateTime dataOraDimissioniPreviste;
@@ -12,17 +17,24 @@ public class Ricovero {
     private Letto letto;
     private List<Prestazione> prestazioni = new ArrayList<>();
 
-    // costruttore vuoto
+    /**
+     * costruttore vuoto per permettere la creazione dell'oggetto e il popolamento da db.
+     */
     public Ricovero() {}
 
-    // costruttore con parametri base
+    /**
+     * crea un nuovo ricovero definendo il paziente, il letto assegnato e il momento dell'ingresso.
+     *
+     * @param paziente il paziente che viene ricoverato
+     * @param letto    il posto letto assegnato
+     * @param inizio   la data e ora dell'ingresso
+     */
     public Ricovero(Paziente paziente, Letto letto, LocalDateTime inizio) {
         this.paziente = paziente;
         this.letto = letto;
         this.dataOraInizio = inizio;
     }
 
-    // getter e setter
     public LocalDateTime getDataOraInizio() {
         return dataOraInizio;
     }

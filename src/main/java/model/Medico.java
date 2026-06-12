@@ -3,6 +3,11 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * rappresenta un medico registrato nel sistema.
+ * estende la classe utente e aggiunge informazioni specifiche come la matricola,
+ * la specializzazione e i collegamenti a reparti, turni e prestazioni.
+ */
 public class Medico extends Utente {
     private String matricola;
     private String specializzazione;
@@ -10,14 +15,20 @@ public class Medico extends Utente {
     private List<Turno> turni = new ArrayList<>();
     private List<Prestazione> prestazioni = new ArrayList<>();
 
-    // costruttore del medico con i dati di accesso e le info base
+    /**
+     * crea un nuovo medico con i dati di accesso e le informazioni base.
+     *
+     * @param login            il nome utente per il login
+     * @param password         la password associata
+     * @param matricola        il codice identificativo del medico
+     * @param specializzazione la specializzazione medica del dottore
+     */
     public Medico(String login, String password, String matricola, String specializzazione) {
         super(login, password);
         this.matricola = matricola;
         this.specializzazione = specializzazione;
     }
 
-    // metodi getter e setter per gestire i dati del medico
     public String getMatricola() {
         return matricola;
     }

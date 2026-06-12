@@ -30,8 +30,8 @@ public class AccessoFrame extends JFrame {
      * costruttore della finestra di accesso.
      * riceve il controller principale che verrà usato per verificare le credenziali.
      *
+     * @param controller il controller centrale che contiene la logica del programma
      */
-
     public AccessoFrame(Controller controller) {
 
         //salvo il controller per usarlo nell'evento del bottone

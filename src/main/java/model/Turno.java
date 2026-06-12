@@ -2,13 +2,17 @@ package model;
 
 import java.time.LocalDateTime;
 
+/**
+ * rappresenta un turno di lavoro programmato per un medico.
+ * definisce il giorno della settimana, l'intervallo orario di inizio/fine
+ * e il medico a cui è assegnato il turno.
+ */
 public class Turno {
-    private String giornoSettimana; // ho cambiato da enum a string per semplicità
+    private String giornoSettimana;
     private LocalDateTime oraInizio;
     private LocalDateTime oraFine;
     private Medico medico;
 
-    // getter e setter
     public String getGiornoSettimana() {
         return giornoSettimana;
     }

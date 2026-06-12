@@ -10,10 +10,9 @@ import javax.swing.BorderFactory;
 import java.awt.GridLayout;
 
 /**
- * Dashboard principale mostrata dopo il login.
- *
- * Mostra il riepilogo dei letti e permette di aprire
- * Archivio Degenti e Gestione Degenze.
+ * dashboard principale mostrata dopo che l'utente ha fatto il login con successo.
+ * fa da menu centrale: mostra il riepilogo dei letti e permette di aprire le altre finestre
+ * (archivio degenti e gestione degenze).
  */
 public class DashboardFrame extends JFrame {
 
@@ -27,6 +26,11 @@ public class DashboardFrame extends JFrame {
     private JButton bottoneDegenze;
     private JButton bottoneEsci;
 
+    /**
+     * crea la schermata di menu e posiziona tutti i bottoni e i testi.
+     *
+     * @param controller il controller centrale per leggere i contatori dal database
+     */
     public DashboardFrame(Controller controller) {
         this.controller = controller;
 
@@ -69,6 +73,10 @@ public class DashboardFrame extends JFrame {
         setVisible(true);
     }
 
+    /**
+     * chiede al controller i numeri aggiornati dei letti (totali, occupati e liberi)
+     * e aggiorna le scritte sulla schermata.
+     */
     public void aggiornaDashboard() {
         labelLettiTotali.setText("Letti totali: " + controller.contaLettiTotali());
         labelLettiOccupati.setText("Letti occupati: " + controller.contaLettiOccupati());

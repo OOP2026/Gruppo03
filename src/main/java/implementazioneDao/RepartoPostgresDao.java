@@ -12,10 +12,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * DAO PostgreSQL per la tabella reparto.
- *
- * Tabella:
- * reparto(nome)
+ * implementazione specifica per postgresql dell'interfaccia repartodao.
+ * contiene le query sql per salvare e cercare i reparti nel database.
  */
 public class RepartoPostgresDao implements RepartoDAO {
 

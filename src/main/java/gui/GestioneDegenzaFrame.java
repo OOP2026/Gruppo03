@@ -12,12 +12,8 @@ import javax.swing.JPanel;
 import java.awt.GridLayout;
 
 /**
- * Schermata per registrare un ricovero/degenza.
- *
- * Usa tre JComboBox:
- * - paziente già presente nell'archivio;
- * - reparto;
- * - letto libero nel reparto selezionato.
+ * schermata per registrare un nuovo ricovero.
+ * fa scegliere all'operatore un paziente già salvato, un reparto e gli assegna un letto libero.
  */
 public class GestioneDegenzaFrame extends JFrame {
 
@@ -30,6 +26,12 @@ public class GestioneDegenzaFrame extends JFrame {
 
     private JButton bottoneRegistra;
 
+    /**
+     * crea la finestra per gestire le degenze e imposta tutti i menu a tendina.
+     *
+     * @param controller il controller centrale per comunicare con il database
+     * @param dashboardFrame la finestra del menu principale, passata per aggiornarle i contatori
+     */
     public GestioneDegenzaFrame(Controller controller, DashboardFrame dashboardFrame) {
         this.controller = controller;
         this.dashboardFrame = dashboardFrame;
@@ -72,6 +74,9 @@ public class GestioneDegenzaFrame extends JFrame {
         setVisible(true);
     }
 
+    /**
+     * chiede al controller la lista dei pazienti e la inserisce nel menu a tendina.
+     */
     private void caricaPazienti() {
         comboPazienti.removeAllItems();
 
@@ -82,6 +87,9 @@ public class GestioneDegenzaFrame extends JFrame {
         }
     }
 
+    /**
+     * chiede al controller i reparti dell'ospedale e li mette nella tendina.
+     */
     private void caricaReparti() {
         comboReparti.removeAllItems();
 
@@ -92,6 +100,10 @@ public class GestioneDegenzaFrame extends JFrame {
         }
     }
 
+    /**
+     * guarda quale reparto è stato scelto e ricarica la tendina dei letti
+     * mostrando solo quelli vuoti in quel reparto.
+     */
     private void aggiornaLettiLiberi() {
         comboLetti.removeAllItems();
 
@@ -108,6 +120,10 @@ public class GestioneDegenzaFrame extends JFrame {
         }
     }
 
+    /**
+     * prende i dati scelti nei menu a tendina e chiede al controller di salvare il ricovero.
+     * se va a buon fine, aggiorna i letti liberi e i numeri sulla dashboard.
+     */
     private void registraRicovero() {
         String pazienteSelezionato = (String) comboPazienti.getSelectedItem();
         String repartoSelezionato = (String) comboReparti.getSelectedItem();
@@ -147,6 +163,13 @@ public class GestioneDegenzaFrame extends JFrame {
         }
     }
 
+    /**
+     * prende la stringa del menu a tendina (es. "codice - cognome nome") e la divide
+     * per restituire solo il codice fiscale da mandare al database.
+     *
+     * @param testoCombo il testo intero selezionato nel menu
+     * @return solo il codice fiscale tagliato e isolato
+     */
     private String estraiCodiceFiscale(String testoCombo) {
         String[] parti = testoCombo.split(" - ");
 

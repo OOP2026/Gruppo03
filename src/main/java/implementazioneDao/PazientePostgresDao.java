@@ -14,10 +14,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * DAO PostgreSQL per la tabella paziente.
- *
- * Tabella:
- * paziente(codice_fiscale, nome, cognome, data_nascita)
+ * implementazione specifica per postgresql dell'interfaccia pazientedao.
+ * contiene le query sql per salvare, cercare, aggiornare o eliminare i pazienti dal database.
  */
 public class PazientePostgresDao implements PazienteDAO {
 
@@ -121,6 +119,14 @@ public class PazientePostgresDao implements PazienteDAO {
         }
     }
 
+    /**
+     * metodo di appoggio interno. prende una riga grezza in uscita dal database
+     * e la trasforma in un vero e proprio oggetto paziente.
+     *
+     * @param rs il risultato della query sql
+     * @return l'oggetto paziente pronto all'uso
+     * @throws SQLException se manca qualche colonna o c'è un errore di lettura
+     */
     private Paziente creaPazienteDaResultSet(ResultSet rs) throws SQLException {
         Paziente p = new Paziente();
 
