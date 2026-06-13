@@ -9,11 +9,17 @@ import java.util.List;
  * la specializzazione e i collegamenti a reparti, turni e prestazioni.
  */
 public class Medico extends Utente {
+
+    // campi specifici per l'identificazione e l'assegnazione del medico
     private String matricola;
     private String specializzazione;
     private Reparto reparto;
+
+    // liste per gestire le relazioni con i turni di lavoro e gli interventi effettuati
     private List<Turno> turni = new ArrayList<>();
     private List<Prestazione> prestazioni = new ArrayList<>();
+
+    // costruttore
 
     /**
      * crea un nuovo medico con i dati di accesso e le informazioni base.
@@ -24,10 +30,13 @@ public class Medico extends Utente {
      * @param specializzazione la specializzazione medica del dottore
      */
     public Medico(String login, String password, String matricola, String specializzazione) {
+        // richiama il costruttore della classe padre per impostare le credenziali
         super(login, password);
         this.matricola = matricola;
         this.specializzazione = specializzazione;
     }
+
+    // metodi getter e setter per l'accesso e la modifica dei dati
 
     public String getMatricola() {
         return matricola;

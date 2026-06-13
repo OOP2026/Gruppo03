@@ -8,8 +8,13 @@ import java.util.List;
  * è un contenitore logico che raggruppa una lista di stanze in cui sono distribuiti i letti.
  */
 public class Reparto {
+
+    // campi identificativi e strutturali del reparto
+
     private String nome;
     private List<Stanza> stanze = new ArrayList<>();
+
+    // metodi getter e setter per leggere e modificare i dati
 
     /**
      * restituisce il nome identificativo del reparto.

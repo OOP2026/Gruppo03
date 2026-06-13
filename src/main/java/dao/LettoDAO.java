@@ -10,6 +10,8 @@ import java.util.List;
  */
 public interface LettoDAO {
 
+    // operazioni di scrittura sul database
+
     /**
      * salva un nuovo letto nel database.
      *
@@ -18,8 +20,10 @@ public interface LettoDAO {
      */
     void save(Letto l) throws SQLException;
 
+    // operazioni di lettura e ricerca
+
     /**
-     * cerca un letto usando il suo codice esatto (tipo "l101a").
+     * cerca un letto usando il suo codice esatto.
      *
      * @param codice il codice identificativo del letto
      * @return il letto trovato, o null se non esiste
@@ -43,6 +47,8 @@ public interface LettoDAO {
      * @throws SQLException se c'è un errore durante la ricerca
      */
     List<Letto> findLiberiByReparto(String nomeReparto) throws SQLException;
+
+    // operazioni di modifica
 
     /**
      * aggiorna i dati di un letto che si trova già nel database.

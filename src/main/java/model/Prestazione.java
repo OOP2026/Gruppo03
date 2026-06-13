@@ -3,17 +3,23 @@ package model;
 import java.time.LocalDateTime;
 
 /**
- * rappresenta una prestazione medica erogata (es. esame, visita, intervento).
+ * rappresenta una prestazione medica erogata.
  * tiene traccia dell'esito, della durata e dei collegamenti con il medico
  * che l'ha eseguita e il ricovero di riferimento.
  */
 public class Prestazione {
+
+    // campi che definiscono i dettagli tecnici della prestazione
     private String esito;
     private TipoPrestazione tipo;
     private LocalDateTime dataOraInizio;
     private float durata;
+
+    // riferimenti per collegare la prestazione agli altri oggetti del sistema
     private Ricovero ricovero;
     private Medico medico;
+
+    // metodi getter e setter per leggere e modificare i dati
 
     public String getEsito() {
         return esito;

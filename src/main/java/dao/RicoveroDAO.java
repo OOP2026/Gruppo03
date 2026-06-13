@@ -12,6 +12,8 @@ import java.util.List;
  */
 public interface RicoveroDAO {
 
+    // operazioni di inserimento
+
     /**
      * salva un nuovo ricovero nel database.
      *
@@ -19,6 +21,8 @@ public interface RicoveroDAO {
      * @throws SQLException se c'è un problema durante il salvataggio
      */
     void save(Ricovero r) throws SQLException;
+
+    // operazioni di lettura e ricerca
 
     /**
      * cerca un ricovero specifico usando il codice fiscale del paziente e la data esatta in cui è iniziato.
@@ -39,15 +43,17 @@ public interface RicoveroDAO {
     List<Ricovero> findAll() throws SQLException;
 
     /**
-     * cerca solo i ricoveri attivi al momento (quelli dove il paziente non è ancora stato dimesso).
+     * cerca solo i ricoveri attivi al momento.
      *
      * @return la lista dei ricoveri attualmente in corso
      * @throws SQLException se c'è un errore durante la ricerca
      */
     List<Ricovero> findRicoveriAttivi() throws SQLException;
 
+    // operazioni di modifica
+
     /**
-     * aggiorna i dati di un ricovero già esistente (molto utile per aggiungere la data di dimissione).
+     * aggiorna i dati di un ricovero già esistente.
      *
      * @param r il ricovero con i dati aggiornati
      * @throws SQLException se fallisce la modifica nel database

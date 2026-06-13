@@ -10,12 +10,17 @@ import java.util.List;
  * e le prestazioni mediche effettuate durante la sua permanenza in un letto specifico.
  */
 public class Ricovero {
+
+    // campi temporali e riferimenti per collegare il ricovero agli altri oggetti del sistema
+
     private LocalDateTime dataOraInizio;
     private LocalDateTime dataOraDimissioniPreviste;
     private LocalDateTime dataOraDimissioneEffettuate;
     private Paziente paziente;
     private Letto letto;
     private List<Prestazione> prestazioni = new ArrayList<>();
+
+    // costruttori
 
     /**
      * costruttore vuoto per permettere la creazione dell'oggetto e il popolamento da db.
@@ -34,6 +39,8 @@ public class Ricovero {
         this.letto = letto;
         this.dataOraInizio = inizio;
     }
+
+    // metodi getter e setter per leggere e modificare i dati
 
     public LocalDateTime getDataOraInizio() {
         return dataOraInizio;

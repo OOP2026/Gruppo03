@@ -5,8 +5,13 @@ package model;
  * ogni letto ha un codice univoco ed è collocato in una specifica stanza.
  */
 public class Letto {
+
+    // campi principali della classe
+
     private String codice;
     private Stanza stanza;
+
+    // costruttori
 
     /**
      * costruttore vuoto, necessario per le operazioni di popolamento da database.
@@ -23,6 +28,8 @@ public class Letto {
         this.codice = codice;
         this.stanza = stanza;
     }
+
+    // metodi getter e setter per leggere e modificare i dati
 
     public String getCodice() {
         return codice;

@@ -11,6 +11,8 @@ import java.util.List;
  */
 public interface StanzaDAO {
 
+    // operazioni di inserimento
+
     /**
      * salva una nuova stanza nel database.
      *
@@ -18,6 +20,8 @@ public interface StanzaDAO {
      * @throws SQLException se c'è un problema durante il salvataggio
      */
     void save(Stanza s) throws SQLException;
+
+    // operazioni di lettura e ricerca
 
     /**
      * cerca tutte le stanze che appartengono a un reparto specifico.

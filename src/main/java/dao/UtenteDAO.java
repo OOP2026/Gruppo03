@@ -5,10 +5,12 @@ import java.sql.SQLException;
 import java.util.List;
 
 /**
- * interfaccia per gestire gli utenti (amministratori, medici, ecc.) nel database.
+ * interfaccia per gestire gli utenti nel database.
  * contiene i metodi per salvare, cercare e controllare gli accessi al sistema.
  */
 public interface UtenteDAO {
+
+    // operazioni di inserimento
 
     /**
      * salva un nuovo utente nel database.
@@ -18,8 +20,10 @@ public interface UtenteDAO {
      */
     void save(Utente u) throws SQLException;
 
+    // operazioni di lettura e ricerca
+
     /**
-     * cerca un utente usando il suo username (login).
+     * cerca un utente usando il suo username.
      *
      * @param login l'username dell'utente da cercare
      * @return l'utente trovato, o null se non esiste
@@ -34,6 +38,8 @@ public interface UtenteDAO {
      * @throws SQLException se c'è un problema nel caricamento dei dati
      */
     List<Utente> findAll() throws SQLException;
+
+    // operazioni di verifica e accesso
 
     /**
      * controlla se l'username e la password inseriti corrispondono a un utente registrato.

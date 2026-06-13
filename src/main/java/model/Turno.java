@@ -8,10 +8,15 @@ import java.time.LocalDateTime;
  * e il medico a cui è assegnato il turno.
  */
 public class Turno {
+
+    // campi temporali e riferimenti per l'assegnazione del turno
+
     private String giornoSettimana;
     private LocalDateTime oraInizio;
     private LocalDateTime oraFine;
     private Medico medico;
+
+    // metodi getter e setter per leggere e modificare i dati
 
     public String getGiornoSettimana() {
         return giornoSettimana;

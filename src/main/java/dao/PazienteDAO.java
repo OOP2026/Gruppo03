@@ -11,6 +11,8 @@ import java.util.List;
  */
 public interface PazienteDAO {
 
+    // operazioni di inserimento
+
     /**
      * salva un nuovo paziente nel database.
      *
@@ -19,14 +21,16 @@ public interface PazienteDAO {
      */
     void save(Paziente p) throws SQLException;
 
+    // operazioni di lettura e ricerca
+
     /**
      * cerca un paziente usando il suo codice fiscale.
      *
-     * @param cf il codice fiscale del paziente da cercare
+     * @param codiceFiscale il codice fiscale del paziente da cercare
      * @return il paziente trovato, o null se non esiste nell'archivio
      * @throws SQLException se c'è un problema durante la ricerca
      */
-    Paziente findByCodiceFiscale(String cf) throws SQLException;
+    Paziente findByCodiceFiscale(String codiceFiscale) throws SQLException;
 
     /**
      * prende tutti i pazienti registrati nell'ospedale.
@@ -35,6 +39,8 @@ public interface PazienteDAO {
      * @throws SQLException se c'è un errore nel caricamento dei dati
      */
     List<Paziente> findAll() throws SQLException;
+
+    // operazioni di modifica e cancellazione
 
     /**
      * aggiorna i dati anagrafici di un paziente già esistente.
@@ -47,8 +53,8 @@ public interface PazienteDAO {
     /**
      * elimina un paziente dal database usando il suo codice fiscale.
      *
-     * @param cf il codice fiscale del paziente da cancellare
+     * @param codiceFiscale il codice fiscale del paziente da cancellare
      * @throws SQLException se si verifica un errore durante l'eliminazione
      */
-    void delete(String cf) throws SQLException;
+    void delete(String codiceFiscale) throws SQLException;
 }

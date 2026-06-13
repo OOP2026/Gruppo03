@@ -10,6 +10,8 @@ import java.util.List;
  */
 public interface RepartoDAO {
 
+    // operazioni di inserimento
+
     /**
      * salva un nuovo reparto nel database.
      *
@@ -18,8 +20,10 @@ public interface RepartoDAO {
      */
     void save(Reparto r) throws SQLException;
 
+    // operazioni di lettura e ricerca
+
     /**
-     * cerca un reparto specifico partendo dal suo nome (es. "cardiologia").
+     * cerca un reparto specifico partendo dal suo nome.
      *
      * @param nome il nome del reparto da cercare
      * @return il reparto trovato, oppure null se non esiste

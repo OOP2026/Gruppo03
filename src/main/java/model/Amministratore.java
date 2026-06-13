@@ -1,24 +1,30 @@
 package model;
 
 /**
- * rappresenta un utente con permessi avanzati (amministratore).
+ * rappresenta un utente con permessi avanzati.
  * oltre alle credenziali base, ha un nome utente visualizzabile
  * e può eseguire operazioni gestionali sul sistema.
  */
 public class Amministratore extends Utente {
+
+    // variabile specifica per questa classe che estende l'utente base
     private String username;
 
     /**
      * crea un nuovo amministratore.
      *
-     * @param login    il nome utente per il login
+     * @param login il nome utente per il login
      * @param password la password associata
-     * @param username il nome reale dell'amministratore (es. "Daniele")
+     * @param username il nome reale dell'amministratore
      */
     public Amministratore(String login, String password, String username) {
+        // richiama il costruttore della classe padre per impostare le credenziali
         super(login, password);
+        // imposta il parametro aggiuntivo specifico di questa classe
         this.username = username;
     }
+
+    // metodi operativi
 
     // metodo per la registrazione di un nuovo paziente nel sistema
     public boolean registraPaziente(Paziente p) {
@@ -26,7 +32,7 @@ public class Amministratore extends Utente {
         return true;
     }
 
-    // associa un nuovo ricovero a un posto letto
+    // associa un nuovo ricovero a un posto letto specifico
     public boolean registraRicovero(Ricovero r, Letto l) {
         // logica di assegnazione da implementare
         return false;
@@ -37,6 +43,8 @@ public class Amministratore extends Utente {
         // logica di ricerca nel database da implementare
         return "";
     }
+
+    // metodi getter e setter
 
     /**
      * restituisce il nome visualizzabile dell'amministratore.

@@ -8,9 +8,14 @@ import java.util.List;
  * funge da contenitore per i posti letto e mantiene il riferimento al reparto di appartenenza.
  */
 public class Stanza {
+
+    // campi identificativi e riferimenti gerarchici della stanza
+
     private String nome;
     private List<Letto> letti = new ArrayList<>();
     private Reparto reparto;
+
+    // metodi getter e setter per leggere e modificare i dati
 
     /**
      * restituisce il nome identificativo della stanza.

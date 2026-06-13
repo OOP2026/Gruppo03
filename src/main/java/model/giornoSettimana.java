@@ -5,6 +5,9 @@ package model;
  * viene usata per pianificare le attività o filtrare i turni.
  */
 public enum giornoSettimana {
+
+    // elenco fisso dei giorni lavorativi e prefestivi gestiti dal sistema
+
     LUNEDI,
     MARTEDI,
     MERCOLEDI,
